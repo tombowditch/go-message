@@ -7,6 +7,8 @@ import (
 	"net/textproto"
 	"sort"
 	"strings"
+
+	"github.com/emersion/go-message/messageutil"
 )
 
 // From https://golang.org/src/mime/multipart/writer.go?s=2140:2215#L76
@@ -18,7 +20,7 @@ func writeHeader(w io.Writer, header Header) error {
 	sort.Strings(keys)
 	for _, k := range keys {
 		for _, v := range header[k] {
-			if _, err := io.WriteString(w, formatHeaderField(k, v)); err != nil {
+			if _, err := io.WriteString(w, messageutil.FormatHeaderField(k, v)); err != nil {
 				return err
 			}
 		}
