@@ -383,7 +383,9 @@ func ReadHeader(r *bufio.Reader) (Header, error) {
 		// appear in the wild, violating specs, so we remove them if present.
 		i := bytes.IndexByte(kv, ':')
 		if i < 0 {
-			return newHeader(fs), fmt.Errorf("message: malformed MIME header line: %v", string(kv))
+			//TODO: look into this, in base64 encoded email it's actually the body (?)
+			continue
+			//return newHeader(fs), fmt.Errorf("message: malformed MIME header line: %v", string(kv))
 		}
 
 		key := textproto.CanonicalMIMEHeaderKey(string(trim(kv[:i])))
